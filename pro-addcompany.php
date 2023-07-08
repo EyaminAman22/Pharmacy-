@@ -1,4 +1,43 @@
+<?php
+    session_start();
+    include 'db_connect.php';
+    
+    if(isset($_POST['submit'])){
+        
 
+        $cname = $_POST['cname'];
+        $cemail = $_POST['email'];
+        $cphone = $_POST['phone'];
+        $caddress = $_POST['address'];
+
+        $error = [];
+
+        if(empty($cname)){
+            $error['cname'] = 'Please write the Company Name';
+        }
+        if(empty($cemail)){
+            $error['cemail'] = 'Please write the Company email';
+        }
+        if(empty($cphone)){
+            $error['cphone'] = 'Please write the Phone Number';
+        }
+        if(empty($caddress)){
+            $error['caddress'] = 'Please write the Company Address';
+        }
+
+        if(count($error)==0){
+            $provider_id = $_SESSION['provider_id'];
+
+            $insert = "INSERT INTO companies(company_name,company_email,phone,address,provider_id) VALUES ('$cname','$cemail','$cphone','$caddress','$provider_id')";
+
+            if(mysqli_query($conn,$insert)){
+                $MSG = "Company Added Successfully";
+            }
+        }
+
+    }
+
+?>
 <!doctype html>
 <html>
 <head>
@@ -44,7 +83,7 @@
                      <a href="index.php"><img  class="w-14 ml-64 mt-[-30px] ease-out duration-400 hover:w-16 hover:ease-in"  src="images/back.png" alt=""></a>
             </div>
             <div class="text-20">
-               <form class="flex flex-col text-center gap-y-6" action="" method="POST">
+               <form class="flex flex-col text-center gap-y-6" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                <input class="w-96 rounded-2xl" type="hidden" name="company_id" >
                <input class="w-96 ml-72 rounded-2xl" name="cname" placeholder="  Company Name"type="text" >
                <input class="w-96 ml-72 rounded-2xl" name="email" placeholder="  E-mail"type="email">
