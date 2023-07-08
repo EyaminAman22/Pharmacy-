@@ -78,7 +78,7 @@
                     <td class="p-4 border  border-white"><?php echo $row['address']?></td>
                     <td class="p-4 border  border-white space-x-3">
  <!--                       <a class="inline-block rounded-lg py-1 px-2 font-semibold hover:outline hover:ouline-navy hover:text-white   hover:bg-navy text-navy bg-white duration-700 ease-in-out" href="#">Edit</a>-->
-                        <a class="inline-block rounded-lg py-1 px-2 font-semibold hover:outline hover:ouline-navy hover:text-white   hover:bg-navy text-navy bg-white duration-700 ease-in-out" href="company.php?dlt=<?php echo $row['company_id']?>">Delete</a>
+                        <a class="inline-block rounded-lg py-1 px-2 font-semibold hover:outline hover:ouline-navy hover:text-white   hover:bg-navy text-navy bg-white duration-700 ease-in-out" href="pro-company.php?dlt=<?php echo $row['company_id']?>">Delete</a>
                     </td>
                     </tr>
                 </tbody>
@@ -96,7 +96,7 @@
                     <td class="p-4 border  border-white">sh</td>
                     <td class="p-4 border  border-white space-x-3">
  <!--                       <a class="inline-block rounded-lg py-1 px-2 font-semibold hover:outline hover:ouline-navy hover:text-white   hover:bg-navy text-navy bg-white duration-700 ease-in-out" href="#">Edit</a>-->
-                        <a class="inline-block rounded-lg py-1 px-2 font-semibold hover:outline hover:ouline-navy hover:text-white   hover:bg-navy text-navy bg-white duration-700 ease-in-out" href="company.php?dlt=<?php echo $row['company_id']?>">Delete</a>
+                        <a class="inline-block rounded-lg py-1 px-2 font-semibold hover:outline hover:ouline-navy hover:text-white   hover:bg-navy text-navy bg-white duration-700 ease-in-out" href="pro-company.php?dlt=<?php echo $row['company_id']?>">Delete</a>
                     </td>
                     </tr>
                 </tbody>
