@@ -59,6 +59,25 @@
                 <th class="p-2 border  border-white text-red-500">Quantity</th>
             </tr>
         </thead>
+        
+         <?php
+            while($row = mysqli_fetch_assoc($result)){
+        ?>
+            <tbody class="">
+                <tr class="">
+                    <td class="p-2 border  border-white"><?php echo $row['medicine_name']?></td>
+                    <td class="p-2 border  border-white"><?php echo $row['dosage']?></td>
+                <td class="p-2 border  border-white"><?php echo $row['exp']?></td>
+                <td class="p-2 border  border-white"><?php echo $row['category']?></td>
+                <td class="p-2 border  border-white"><?php echo $row['base_price']?></td>
+                <td class="p-2 border  border-white"><?php echo $row['company_id']?></td>
+                <td class="p-2 border  border-white text-red-500"><?php echo $row['quantity']?></td>
+                </tr>
+            </tbody>
+        <?php
+        }
+        ?>
+
         <tbody class="">
             <tr class="">
                 <td class="p-2 border  border-white">Aspirin</td>
