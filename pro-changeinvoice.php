@@ -1,3 +1,60 @@
+<?php
+    session_start();
+    include("db_connect.php");
+
+    if(isset($_POST['submit'])){
+        
+        $total_payment = $_POST['total_payment'];
+        $payment_due = $_POST['payment_due'];
+        $paid_amount =$_POST['paid_amount'];
+        $company_id = $_POST['company_id'];
+        $invoice_date = $_POST['invoice_date'];
+        $provider_id = $_SESSION['provider_id'];
+
+        $error = [];
+
+        if(empty($total_payment)){
+            $error['total_payment'] = "Error";
+        }
+        if(empty($payment_due)){
+            $error['payment_due'] = "Error";
+        }
+        if(empty($paid_amount)){
+            $error['paid_amount'] = "Error";
+        }
+        if(empty($company_id)){
+            $error['company_id'] = "Error";
+        }
+        if(empty($invoice_date)){
+            $error['invoice_date'] = "Error";
+        }
+
+        if(count($error) == 0){
+            $add_info = mysqli_query($conn, "SELECT* FROM companies WHERE provider_id = '$provider_id' AND company_id = '$company_id'");
+
+            if(mysqli_num_rows($add_info)>0){
+                $insert = "INSERT INTO invoices(total_payment,payment_due,paid_amount,company_id,invoice_date,provider_id)
+                            VALUES('$total_payment','$payment_due','$paid_amount','$company_id','$invoice_date','$provider_id')";
+
+                            if(mysqli_query($conn,$insert)){
+                                echo "ADD DONE";
+                                $MSG = "Successfully Added Invoice";
+                            }
+            }
+            else{
+                echo "company not exist in your database";
+                $err_msg = "company not exist in your database" ;
+            }
+        }
+        else{
+            echo "Fill the Full form";
+        }
+    }
+    if(isset($_POST['reset'])){
+        header('pro-addinvoice.php');
+    }
+
+?>
 <!doctype html>
 <html>
 <head>
@@ -44,7 +101,7 @@
                      <a href=""><img  class="w-14 ml-64 mt-[-30px] ease-out duration-400 hover:w-16 hover:ease-in"  src="images/back.png" alt=""></a>
             </div>
             <div class="text-20">
-               <form class="flex flex-col text-center gap-y-6" action="" method="POST">
+               <form class="flex flex-col text-center gap-y-6" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                     
                     <input class="w-96 ml-72 rounded-2xl" name="total_payment" placeholder="  Total Payment"type="number">
                     <input class="w-96 ml-72 rounded-2xl" name="payment_due" placeholder="Payment Due" type="number">
