@@ -1,3 +1,19 @@
+<?php
+    session_start();
+    include('db_connect.php');
+    $provider_id = $_SESSION['provider_id'];
+
+    if(isset($_GET['delete'])){
+        $e_id = $_GET['delete'];
+        
+        $dlt = mysqli_query($conn, "DELETE FROM employee WHERE id = $e_id");
+    }
+    $sql = "SELECT* FROM employee WHERE provider_id LIKE '$provider_id'";
+    $result = mysqli_query($conn,$sql);
+    
+    
+    
+?>
 <!doctype html>
 <html>
 <head>
@@ -56,26 +72,30 @@
                         <th class="p-2 border  border-white">Operation</th>
                     </tr>
                 </thead>
+              <?php
+                while($row = mysqli_fetch_assoc($result)){
+                ?>
                     <tbody class="">
                         <tr class="">
-                            <td class="p-4 border  border-white">as</td>
-                    <td class="p-4 border  border-white">agfa</td>
-                    <td class="p-4 border  border-white">as</td>
-                    <td class="p-4 border  border-white">asg</td>
-                    <td class="p-4 border  border-white">sh</td>
-                    <td class="p-4 border  border-white space-x-3">
-                        <td class="p-4 border  border-white">as</td>
-                    <td class="p-4 border  border-white">agfa</td>
-                    <td class="p-4 border  border-white">as</td>
-                    <td class="p-4 border  border-white">asg</td>
-                    <td class="p-4 border  border-white">sh</td>
-                    <td class="p-4 border  border-white space-x-3">
+                            <td class="p-2 border  border-white"><?php echo $row['id']?></td>
+                            <td class="p-2 border  border-white">---</td>
+                            <td class="p-2 border  border-white"><?php echo $row['first_name']?></td>
+                        <td class="p-2 border  border-white"><?php echo $row['last_name']?></td>
+                        <td class="p-2 border  border-white"><?php echo $row['Gender']?></td>
+                        <td class="p-2 border  border-white"><?php echo $row['email']?></td>
+                        <td class="p-2 border  border-white"><?php echo $row['phone']?></td>
+                        <td class="p-2 border  border-white"><?php echo $row['join_date']?></td>
+                        <td class="p-2 border  border-white"><?php echo $row['salary']?></td>
+                        <td class="p-2 border  border-white"><?php echo $row['address']?></td>
                         <td class="p-2 border  border-white space-3 gap-y-2">
 <!--                            <a class="mb-1 inline-block rounded-lg py-1 px-2 font-semibold hover:outline hover:ouline-navy hover:text-white   hover:bg-navy text-navy bg-white duration-700 ease-in-out" href="#">Edit</a> -->
-                            <a class="inline-block rounded-lg py-1 px-2 font-semibold hover:outline hover:ouline-navy hover:text-white   hover:bg-navy text-navy bg-white duration-700 ease-in-out" href="">Delete</a>
+                            <a class="inline-block rounded-lg py-1 px-2 font-semibold hover:outline hover:ouline-navy hover:text-white   hover:bg-navy text-navy bg-white duration-700 ease-in-out" href="pro-employee.php?delete=<?php echo $row['id'] ?>">Delete</a>
                         </td>
                         </tr>
                     </tbody>
+                <?php
+                }?>
+                    
             </table>
         </div>
        
