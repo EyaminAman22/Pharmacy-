@@ -51,7 +51,7 @@
         }
     }
     if(isset($_POST['reset'])){
-        header('addinvoice.php');
+        header('pro-addinvoice.php');
     }
 
 ?>
