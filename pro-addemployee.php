@@ -1,3 +1,65 @@
+<?php
+    session_start();
+    include('db_connect.php');
+
+    if(isset($_POST['submit'])){
+        $eimg = $_POST['img'];
+        $efname = $_POST['first_name'];
+        $elname = $_POST['last_name'];
+        $gender = $_POST['Gender'];
+        $email = $_POST['email'];
+        $phone = $_POST['phone'];
+        $joindate = $_POST['join_date'];
+        $salary = $_POST['salary'];
+        $address = $_POST['address'];
+
+        $error = [];
+
+        if(empty($eimg)){
+            $error['img'] = "Ensert an Image"; 
+        }
+        if(empty($efname)){
+            $error['efname'] = "Enter first name"; 
+        }
+        if(empty($elname)){
+            $error['elname'] = "Enter last name"; 
+        }
+        if(empty($gender)){
+            $error['gender'] = "Enter Gender"; 
+        }
+        if(empty($email)){
+            $error['email'] = "Enter Email"; 
+        }
+        if(empty($phone)){
+            $error['phone'] = "Enter Phone Number"; 
+        }
+        if(empty($joindate)){
+            $error['joindate'] = "Enter Join Date"; 
+        }
+        if(empty($salary)){
+            $error['salary'] = "Enter Salary"; 
+        }
+        if(empty($address)){
+            $error['address'] = "Enter Address"; 
+        }
+        if(count($error)==0){
+            $provider_id = $_SESSION['provider_id'];
+
+            $insert = "INSERT INTO employee(img,first_name,last_name,Gender,email,phone,join_date,salary,address,provider_id)
+            VALUES('$eimg','$efname','$elname','$gender','$email','$phone','$joindate','$salary','$address','$provider_id')";
+
+            if(mysqli_query($conn,$insert)){
+                $MSG = "Employee ADDED";
+                echo "DONE";
+            }
+        }
+    }
+    if(isset($_POST['reset'])){
+        header('Location: addemployee.php');
+    }
+
+
+?>
 
 <!doctype html>
 <html>
@@ -45,7 +107,7 @@
                      <a href=""><img  class="w-14 ml-64 mt-[-30px] ease-out duration-400 hover:w-16 hover:ease-in"  src="images/back.png" alt=""></a>
             </div>
             <div class="text-20">
-               <form class="flex flex-col text-center gap-y-4" action="" method="POST">
+               <form class="flex flex-col text-center gap-y-4" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                     <input class="w-96 ml-72 rounded-2xl" name="img" placeholder="Choose an Image"type="file">
                     <input class="w-96 ml-72 rounded-2xl" name="first_name" placeholder="First Name"type="text">
                     <input class="w-96 ml-72 rounded-2xl" name="last_name" placeholder="Last Name"type="text">
