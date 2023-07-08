@@ -1,4 +1,10 @@
-
+<?php
+    session_start();
+    include('db_connect.php');
+    $provider_id = $_SESSION['provider_id'];
+    $sql = "SELECT* FROM medicine WHERE provider_id LIKE '$provider_id' AND quantity<100";
+    $result = mysqli_query($conn,$sql);  
+?>
 <!doctype html>
 <html>
 <head>
