@@ -55,7 +55,7 @@
         }
     }
     if(isset($_POST['reset'])){
-        header('Location: addemployee.php');
+        header('Location: pro-addemployee.php');
     }
 
 
