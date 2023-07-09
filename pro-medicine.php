@@ -1,4 +1,15 @@
+<?php
+    session_start();
+    include('db_connect.php');
+    $provider_id = $_SESSION['provider_id'];
 
+    if(isset($_GET['dlt'])){
+        $md_name = $_GET['dlt'];
+        $dlt = mysqli_query($conn, "DELETE FROM medicine WHERE medicine_name LIKE '$md_name'");
+    }
+    $sql = "SELECT* FROM medicine WHERE provider_id LIKE '$provider_id'";
+    $result = mysqli_query($conn,$sql);  
+?>
 <!doctype html>
 <html>
 <head>
@@ -57,27 +68,32 @@
                 <th class="p-2 border  border-white">Operation</th>
             </tr>
         </thead>
+            <?php
+            while($row = mysqli_fetch_assoc($result)){
+        ?>
             <tbody class="">
                 <tr class="">
-                    <td class="p-2 border  border-white"></td>
-                    <td class="p-2 border  border-white"></td>
-                    <td class="p-2 border  border-white"></td>
-                <td class="p-2 border  border-white"></td>
-                <td class="p-2 border  border-white"></td>
-                <td class="p-2 border  border-white"></td>
+                    <td class="p-2 border  border-white"><?php echo $row['medicine_name']?></td>
+                    <td class="p-2 border  border-white"><?php echo $row['dosage']?></td>
+                    <td class="p-2 border  border-white"><?php echo $row['mgf']?></td>
+                <td class="p-2 border  border-white"><?php echo $row['exp']?></td>
+                <td class="p-2 border  border-white"><?php echo $row['category']?></td>
+                <td class="p-2 border  border-white"><?php echo $row['quantity']?></td>
                 <td class="p-2 border  border-white">
-                    <input type="text" class="w-2/3 rounded-lg text-center form-control" placeholder="  Quantity" name = "qu"> 
+                    <input type="text" class="w-2/3 rounded-lg text-center form-control" placeholder="  Quantity" name = "qu"> <//?php echo $row['quantity']?>
                 </td>
-                <td class="p-2 border  border-white"></td>
-                <td class="p-2 border  border-white"></td>
-                <td class="p-2 border  border-white"></td>
+                <td class="p-2 border  border-white"><?php echo $row['base_price']?></td>
+                <td class="p-2 border  border-white"><?php echo $row['sell_price']?></td>
+                <td class="p-2 border  border-white"><?php echo $row['company_id']?></td>
                 <td class="p-2 border  border-white space-x-3">
                 <input type = "submit" class = "btn btn-lg btn-primary inline-block rounded-lg py-1 px-2 font-semibold hover:outline hover:ouline-navy hover:text-white   hover:bg-navy text-navy bg-white duration-700 ease-in-out mb-2" value = "Add to Cart">
-                    <a class="inline-block rounded-lg py-1 px-2 font-semibold hover:outline hover:ouline-navy hover:text-white   hover:bg-navy text-navy bg-white duration-700 ease-in-out" href="">Delete</a>
+                    <a class="inline-block rounded-lg py-1 px-2 font-semibold hover:outline hover:ouline-navy hover:text-white   hover:bg-navy text-navy bg-white duration-700 ease-in-out" href="medicine.php?dlt=<?php echo $row['medicine_name']?>">Delete</a>
                 </td>
                 </tr>
             </tbody>
-        
+        <?php
+        }
+        ?>
     </table>
 </div>    
     </div>
