@@ -1,4 +1,16 @@
+<?php
+    session_start();
+    include('db_connect.php');
+    $provider_id = $_SESSION['provider_id'];
+    if(isset($_GET['dlt'])){
+        $i_id = $_GET['dlt'];
+        $dlt = mysqli_query($conn, "DELETE FROM invoices WHERE invoice_id = '$i_id'");
+    }
+    $sql = "SELECT* FROM invoices WHERE provider_id LIKE '$provider_id'";
+    $result = mysqli_query($conn,$sql);
 
+    
+?>
 <!doctype html>
 <html>
 <head>
@@ -53,21 +65,26 @@
                 <th class="p-2 border  border-white">Invoice Date</th>
                 <th class="p-2 border  border-white">Operation</th>
             </tr>
-        </thead>
+        </thead> <?php
+            while($row = mysqli_fetch_assoc($result)){
+        ?>
         <tbody class="">
             <tr class="">
-                <td class="p-2 border  border-white">asgv</td>
-                <td class="p-2 border  border-white">aed</td>
-                <td class="p-2 border  border-white">aegw</td>
-            <td class="p-2 border  border-white">sdh</td>
-            <td class="p-2 border  border-white">ahhsa</td>
-            <td class="p-2 border  border-white">sg</td>
+                <td class="p-2 border  border-white"><?php echo $row['invoice_id']?></td>
+                <td class="p-2 border  border-white"><?php echo $row['total_payment']?></td>
+                <td class="p-2 border  border-white"><?php echo $row['payment_due']?></td>
+            <td class="p-2 border  border-white"><?php echo $row['paid_amount']?></td>
+            <td class="p-2 border  border-white"><?php echo $row['company_id']?></td>
+            <td class="p-2 border  border-white"><?php echo $row['invoice_date']?></td>
             <td class="p-2 border  border-white space-x-3">
             <!--<a class="inline-block rounded-lg py-1 px-2 font-semibold hover:outline hover:ouline-navy hover:text-white   hover:bg-navy text-navy bg-white duration-700 ease-in-out" href="#">Edit</a>-->
-                <a class="inline-block rounded-lg py-1 px-2 font-semibold hover:outline hover:ouline-navy hover:text-white   hover:bg-navy text-navy bg-white duration-700 ease-in-out" href="">Delete</a>
+                <a class="inline-block rounded-lg py-1 px-2 font-semibold hover:outline hover:ouline-navy hover:text-white   hover:bg-navy text-navy bg-white duration-700 ease-in-out" href="invoice.php?dlt=<?php echo $row['invoice_id']?>">Delete</a>
             </td>
             </tr>
         </tbody>
+        <?php
+            }
+        ?>
     </table>
 </div>
     </div>
